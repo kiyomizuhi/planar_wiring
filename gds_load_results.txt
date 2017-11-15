@@ -1,0 +1,237 @@
+ + HEADER [0x00000000]
+   - version : [v7.0]
+ + BGNLIB [0x00000006]
+   - created : 31 Oct 117 15:05:37
+   - updated : 29 Aug 2017 20:26:41
+ + LIBNAME [0x00000022]
+   - libName [dummy]
+ + UNITS [0x0000002c]
+   - user unit : 1.0e-3
+   - library unit : 1.0e-9m
+ + BGNSTR [0x00000040]
+   - created : 29 Aug 2017 20:26:41
+   - updated : 29 Aug 2017 20:26:41
+ + STRNAME [0x0000005c]
+   - structName [mark]
+ + BOUNDARY [0x00000064]
+ + LAYER [0x00000068]
+   - layer : 23
+ + DATATYPE [0x0000006e]
+   - datatype : 0
+ + XY [0x00000074]
+   - (500,0) -> (500,1000) -> (1000,1000) -> (0,2000) -> (-1000,1000) -> (-500,1000) -> (-500,0) -> (500,0)
+ + ENDEL [0x000000b8]
+ + ENDSTR [0x000000bc]
+ + BGNSTR [0x000000c0]
+   - created : 29 Aug 2017 20:26:41
+   - updated : 29 Aug 2017 20:26:41
+ + STRNAME [0x000000dc]
+   - structName [dummy]
+ + SREF [0x000000e6]
+ + SNAME [0x000000ea]
+   - srefName [mark]
+ + STRANS [0x000000f2]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + MAG [0x000000f8]
+   - magnification : 3.0e-1
+ + XY [0x00000104]
+   - (-1600,-2000)
+ + ENDEL [0x00000110]
+ + SREF [0x00000114]
+ + SNAME [0x00000118]
+   - srefName [mark]
+ + STRANS [0x00000120]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + MAG [0x00000126]
+   - magnification : 1.0e-1
+ + XY [0x00000132]
+   - (0,-2000)
+ + ENDEL [0x0000013e]
+ + SREF [0x00000142]
+ + SNAME [0x00000146]
+   - srefName [mark]
+ + STRANS [0x0000014e]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + MAG [0x00000154]
+   - magnification : 3.0e-1
+ + XY [0x00000160]
+   - (1600,-2000)
+ + ENDEL [0x0000016c]
+ + SREF [0x00000170]
+ + SNAME [0x00000174]
+   - srefName [mark]
+ + STRANS [0x0000017c]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + MAG [0x00000182]
+   - magnification : 2.0e-1
+ + ANGLE [0x0000018e]
+   - angle : 1.8e+2
+ + XY [0x0000019a]
+   - (-800,2000)
+ + ENDEL [0x000001a6]
+ + SREF [0x000001aa]
+ + SNAME [0x000001ae]
+   - srefName [mark]
+ + STRANS [0x000001b6]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + MAG [0x000001bc]
+   - magnification : 2.0e-1
+ + ANGLE [0x000001c8]
+   - angle : 1.8e+2
+ + XY [0x000001d4]
+   - (800,2000)
+ + ENDEL [0x000001e0]
+ + BOUNDARY [0x000001e4]
+ + LAYER [0x000001e8]
+   - layer : 3
+ + DATATYPE [0x000001ee]
+   - datatype : 0
+ + XY [0x000001f4]
+   - (-1450,-2000) -> (-1450,2000) -> (-1750,2000) -> (-1750,-2000) -> (-1450,-2000)
+ + ENDEL [0x00000220]
+ + BOUNDARY [0x00000224]
+ + LAYER [0x00000228]
+   - layer : 3
+ + DATATYPE [0x0000022e]
+   - datatype : 0
+ + XY [0x00000234]
+   - (50,-2000) -> (50,2000) -> (-50,2000) -> (-50,-2000) -> (50,-2000)
+ + ENDEL [0x00000260]
+ + BOUNDARY [0x00000264]
+ + LAYER [0x00000268]
+   - layer : 3
+ + DATATYPE [0x0000026e]
+   - datatype : 0
+ + XY [0x00000274]
+   - (1750,-2000) -> (1750,2000) -> (1450,2000) -> (1450,-2000) -> (1750,-2000)
+ + ENDEL [0x000002a0]
+ + BOUNDARY [0x000002a4]
+ + LAYER [0x000002a8]
+   - layer : 4
+ + DATATYPE [0x000002ae]
+   - datatype : 0
+ + XY [0x000002b4]
+   - (-700,-2000) -> (-700,2000) -> (-900,2000) -> (-900,-2000) -> (-700,-2000)
+ + ENDEL [0x000002e0]
+ + BOUNDARY [0x000002e4]
+ + LAYER [0x000002e8]
+   - layer : 4
+ + DATATYPE [0x000002ee]
+   - datatype : 0
+ + XY [0x000002f4]
+   - (900,-2000) -> (900,2000) -> (700,2000) -> (700,-2000) -> (900,-2000)
+ + ENDEL [0x00000320]
+ + ENDSTR [0x00000324]
+ + BGNSTR [0x00000328]
+   - created : 15 Nov 2017 21:09:59
+   - updated : 15 Nov 2017 21:09:59
+ + STRNAME [0x00000344]
+   - structName [die_1]
+ + SREF [0x0000034e]
+ + SNAME [0x00000352]
+   - srefName [dummy]
+ + STRANS [0x0000035c]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + ANGLE [0x00000362]
+   - angle : 8.5e+1
+ + XY [0x0000036e]
+   - (-397530,78290)
+ + ENDEL [0x0000037a]
+ + SREF [0x0000037e]
+ + SNAME [0x00000382]
+   - srefName [dummy]
+ + STRANS [0x0000038c]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + ANGLE [0x00000392]
+   - angle : 8.6e+1
+ + XY [0x0000039e]
+   - (-393095,-94030)
+ + ENDEL [0x000003aa]
+ + SREF [0x000003ae]
+ + SNAME [0x000003b2]
+   - srefName [dummy]
+ + STRANS [0x000003bc]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + ANGLE [0x000003c2]
+   - angle : 2.8e+2
+ + XY [0x000003ce]
+   - (-367525,-63830)
+ + ENDEL [0x000003da]
+ + SREF [0x000003de]
+ + SNAME [0x000003e2]
+   - srefName [dummy]
+ + STRANS [0x000003ec]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + ANGLE [0x000003f2]
+   - angle : 7.8e+1
+ + XY [0x000003fe]
+   - (-237920,258020)
+ + ENDEL [0x0000040a]
+ + SREF [0x0000040e]
+ + SNAME [0x00000412]
+   - srefName [dummy]
+ + STRANS [0x0000041c]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + ANGLE [0x00000422]
+   - angle : 8.9e+1
+ + XY [0x0000042e]
+   - (279840,-191640)
+ + ENDEL [0x0000043a]
+ + SREF [0x0000043e]
+ + SNAME [0x00000442]
+   - srefName [dummy]
+ + STRANS [0x0000044c]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + ANGLE [0x00000452]
+   - angle : 2.8e+2
+ + XY [0x0000045e]
+   - (47565,-199110)
+ + ENDEL [0x0000046a]
+ + SREF [0x0000046e]
+ + SNAME [0x00000472]
+   - srefName [dummy]
+ + STRANS [0x0000047c]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + ANGLE [0x00000482]
+   - angle : 2.7e+2
+ + XY [0x0000048e]
+   - (185430,76610)
+ + ENDEL [0x0000049a]
+ + SREF [0x0000049e]
+ + SNAME [0x000004a2]
+   - srefName [dummy]
+ + STRANS [0x000004ac]
+   - reflected : false
+   - absolute magnification : false
+   - absolute angle : false
+ + ANGLE [0x000004b2]
+   - angle : 8.4e+1
+ + XY [0x000004be]
+   - (143960,85620)
+ + ENDEL [0x000004ca]
+ + ENDSTR [0x000004ce]
+ + ENDLIB [0x000004d2]
