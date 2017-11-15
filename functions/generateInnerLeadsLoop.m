@@ -1,0 +1,177 @@
+function [die, leads] = generateInnerLeadsLoop(die, leads, indexx)
+
+global outerFrameNodes
+global figNumStart
+global index
+global numNodes
+global numFinger
+global mindist
+
+index = indexx;
+nn = 4 * numberOfNodesOnOneSide(); % number of nodes on one frame
+
+% parameters
+ldw = leadWidth;
+numNodes = size(outerFrameNodes{index}, 1);
+mindist = 2;
+thisFinger = die.finger{index};
+numFinger = length(thisFinger);
+
+innerNodes = selectInnerNodes(die);
+innerNodes = spreadOutNodes(innerNodes);
+nodesIndex = [1:numNodes 1:numNodes 1:numNodes];
+
+this_outer = sort(die.frameNodes{index}, 'descend');
+innerNodesPicked = [innerNodes + numNodes...
+                    innerNodes...
+                    innerNodes - numNodes];
+                
+shift = -numFinger+1 : numFinger-1;
+record = cell(1,length(shift)); % this keeps the attempts below
+for ii = 1:length(shift)
+    record{ii} = struct('shift', shift(ii),...
+                        'layer', zeros(1, numFinger),...
+                        'path',  zeros(numFinger, numNodes),...
+                        'span',  0,...
+                        'score', zeros(1, numFinger),...
+                        'sgn',   zeros(1, numFinger),...
+                        'delta', zeros(1, numFinger),... % path length defined by this_outer - this_inner
+                        'inner', zeros(1, numFinger),...
+                        'outer', zeros(1, numFinger));
+end
+
+figNum = figNumStart + 10 + indexx;
+figure(figNum);
+set(gcf, 'position', [-1050 50 1000 900]);
+for ii = 1:length(shift)
+    si = [1:numFinger] + shift(ii)+ numFinger;    
+    this_inner = innerNodesPicked(si);
+    record{ii}.inner = this_inner;
+    record{ii}.outer = this_outer;
+    
+    delta = this_outer - this_inner;   % path length defined by this_outer - this_inner
+    record{ii}.delta = delta;
+    sgn = sign(delta);                 % clockwise (+) or anti-clockwise (-)
+    record{ii}.sgn = sgn;
+    layerIdx = 10*ones(1, numFinger); % records if the node has been processed. 10 means un processed.
+    
+    union = [this_outer this_inner];
+    record{ii}.span = max(union)- min(union);
+    record{ii}.score = mean(layerIdx);
+    
+    % plot the layout for this shift
+    subplot(numFinger, 2, ii)
+    plot(-nn+1:2*nn, ones(1,3*nn),'o', 'color', 0.8*[1 1 1]);hold on;
+    plot(-nn+1:2*nn, zeros(1,3*nn),'o', 'color', 0.8*[1 1 1]);hold on;
+    for i = -nn+1:2*nn
+        plot([i i], [0 1], '-', 'color', 0.8*[1 1 1]);hold on;
+    end
+    plot([1 1], [0 1], '-', 'color', 0.6*[1 1 1]);hold on;
+    plot([nn+1 nn+1], [0 1], '-', 'color', 0.6*[1 1 1]);hold on;
+    colors = [1 0 0;...
+              0 1 0;...
+              0 0 1;...
+              1 0 1;...
+              0 1 1];
+    ind = circshift([1:numFinger]', -shift(ii));
+    for i = 1:numFinger
+         plot(this_inner(i), 1, 'o', 'color', colors(ind(i),:));hold on;
+         plot(this_outer(i), 0, 'o', 'color', colors(ind(i),:));hold on;
+    end
+    xlim([-nn 2*nn]);
+    ylim([-0.1 1.1]);
+    title(sprintf('shift = %d,  span=%d,  score=%2.1f', shift(ii), record{ii}.span, record{ii}.score));
+    drawnow;
+    
+    if record{ii}.span >= numNodes % it's impossible to find a configuration if ones has to wind more than numNodes. So, move on to the next config.
+%     if ~isempty(find(abs(delta) > numNodes))
+        continue
+    end
+    
+    for jj = 1:numFinger
+        if layerIdx(jj) == 10 % here, 10 means unprocessed node
+            locj = jj;
+            if delta(jj) == 0 || locj+1 > numFinger % the inner node and the outer node are the same index
+                layerIdx(jj) = 1; % so, we set the layer index to 1
+                
+            elseif delta(jj) < 0 % connect the two nodes backward (counting from the inner node)
+                count_overlap = 0; % count the number of overlapping segments
+                while this_outer(locj) <= this_inner(locj+1) && this_inner(locj) >= this_inner(locj+1)
+                    layerIdx(locj+1) = layerIdx(locj) - 1;
+                    count_overlap = count_overlap + 1;
+                    locj = locj + 1;
+                    if locj + 1 > numFinger
+                        break;
+                    end
+                end
+                layerIdx(jj:locj) = layerIdx(jj:locj) + count_overlap + 1;
+                
+            elseif delta(jj) > 0 % connect the two nodes forward (counting from the inner node)
+                while this_outer(locj) >= this_outer(locj+1) &&  this_inner(locj) <= this_outer(locj+1)
+                    layerIdx(locj+1) = layerIdx(locj) + 1;
+                    locj = locj + 1;
+                    if locj + 1 > numFinger
+                        break;
+                    end
+                end
+                layerIdx(jj:locj) = layerIdx(jj:locj) + 1;
+            end
+            
+        end
+        
+        if sgn(jj) == 0
+            pathIdx = this_inner(jj) + numNodes;
+        else
+            pathIdx = this_inner(jj) + numNodes : sgn(jj) : this_outer(jj) + numNodes;
+        end
+        
+        if length(pathIdx) > 20
+            pathIdx = pathIdx(1:end-20);
+        end
+        
+        thisPath = nodesIndex(pathIdx);
+        record{ii}.path(jj, 1:length(thisPath)) = thisPath;
+    end
+    layerIdx(layerIdx > 10) = layerIdx(layerIdx > 10) - 10;
+    record{ii}.layer = layerIdx;
+    record{ii}.score = mean(layerIdx);
+    subplot(numFinger, 2, ii)
+    for kk = 1:numFinger
+        plot([this_inner(kk) this_inner(kk) this_outer(kk) this_outer(kk)], [1 1-0.1*layerIdx(kk) 1-0.1*layerIdx(kk) 0], '-', 'color', 0.5*[1 1 1], 'lineWidth', 2);hold on;
+    end
+    title(sprintf('shift = %d,  span=%d,  score=%2.1f', shift(ii), record{ii}.span, record{ii}.score))
+end
+
+scores = [];
+for i = 1:length(shift)
+    scores = [scores record{i}.score];
+end
+[val, idx] = min(scores);
+thisFinger = convertPathToActualPath(die, record{idx}, thisFinger);
+
+nn = numberOfNodesOnOneSide();
+for i = 1:numFinger
+    if isempty(thisFinger{i}.path)
+        continue;
+    end
+    ondi = find(ismember(outerFrameNodes{index}, thisFinger{i}.path(end,:), 'rows'));
+    if 1 <= ondi && ondi <= nn
+        stitch = [  0.0 +2.5];
+    elseif nn+1 <= ondi && ondi <= 2*nn
+        stitch = [ +2.5  0.0];
+    elseif 2*nn+1 <= ondi && ondi <= 3*nn
+        stitch = [  0.0 -2.5];
+    elseif 3*nn+1 <= ondi && ondi <= 4*nn
+        stitch = [ -2.5  0.0];
+    end
+    thisFinger{i}.path = [thisFinger{i}.path; thisFinger{i}.path(end,:) + stitch];
+    widths = 0.3*ldw*ones(1, size(thisFinger{i}.path, 1));
+    widths(1) = thisFinger{i}.width;
+    widths(2) = thisFinger{i}.width;
+    widths(end-1) = ldw;
+    widths(end) = ldw;
+    die.finger{index}{i}.width = widths;
+    die.finger{index}{i}.path = thisFinger{i}.path;
+    leads{index}{i}.width = widths;
+    leads{index}{i}.centerPath = thisFinger{i}.path;
+end
